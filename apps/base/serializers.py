@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 from .conf import settings
 from .models import *
-import .helpers
+from base import helpers
 
 
 class InvestSerializer(serializers.Serializer):

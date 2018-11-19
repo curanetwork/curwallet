@@ -22,7 +22,7 @@ def _init_web3():
 def _init_token_contract():
     web3 = _init_web3()
 
-    with open(os.path.join(settings.BASE_DIR, 'token.abi'), 'r') as abi_definition:
+    with open(os.path.join(settings.BASE_DIR, '../token.abi'), 'r') as abi_definition:
         abi = json.load(abi_definition)
 
     return web3.eth.contract(address=settings.ICO_TOKEN_ADDRESS, abi=abi)
@@ -40,8 +40,8 @@ def get_token_balance(address):
 
 
 def is_ongoing():
-    start = datetime.strptime(settings.ICO_START, '%Y-%m-%d').replace(tzinfo=timezone.utc)
-    end = datetime.strptime(settings.ICO_END, '%Y-%m-%d').replace(tzinfo=timezone.utc)
+    start = datetime.strptime(settings.ICO_START, '%Y-%m-%d')
+    end = datetime.strptime(settings.ICO_END, '%Y-%m-%d')
 
     tokens_sold = Transaction.objects.filter(
         status="confirmed"
@@ -51,7 +51,7 @@ def is_ongoing():
 
 
 def is_ended():
-    end = datetime.strptime(settings.ICO_END, '%Y-%m-%d').replace(tzinfo=timezone.utc)
+    end = datetime.strptime(settings.ICO_END, '%Y-%m-%d')
 
     return end < timezone.now() and not is_ongoing()
 
@@ -66,12 +66,9 @@ def calculate_bought(amount):
 def get_rate(currency):
     import requests
 
-    dollar_rate = float()
-
-    settings.ICO_ACTIVENET == 'mainnet':
-        dollar_rate = float(requests.get(
-            f'https://api.coinbase.com/v2/prices/{currency.upper()}-USD/buy'
-        ).json()['data']['amount'])
+    dollar_rate = float(requests.get(
+        f'https://api.coinbase.com/v2/prices/{currency.upper()}-USD/spot'
+    ).json()['data']['amount'])
 
     return dollar_rate
 

@@ -1,6 +1,6 @@
 # Cur wallet #
 
-API server for Cur wallet.
+Wallet service for Cur tokens.
 
 ## Quickstart ##
 
@@ -10,7 +10,7 @@ Make sure you have [pipenv installed](https://docs.pipenv.org/install.html). The
 
 Clone this repo
 
-    git clone https://github.com/curanetwork/curwallet-api.git
+    git clone https://github.com/curanetwork/curwallet.git
 
 cd to curwallet-api and install the development dependencies
 

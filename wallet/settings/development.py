@@ -58,7 +58,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'TAG': 'body',
     'SHOW_TEMPLATE_CONTEXT': True,
     'ENABLE_STACKTRACES': True,
-    'SHOW_TOOLBAR_CALLBACK': 'bounty.settings.development.show_toolbar',
+    'SHOW_TOOLBAR_CALLBACK': 'wallet.settings.development.show_toolbar',
 }
 
 DEBUG_TOOLBAR_PANELS = (

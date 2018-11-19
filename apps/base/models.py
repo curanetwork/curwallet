@@ -52,7 +52,7 @@ class UserManager(BaseUserManager):
         )
 
         from web3 import Web3
-        import .helpers
+        from base import helpers
 
         wallet = helpers.create_account(user.password)
         user.address = wallet.address
