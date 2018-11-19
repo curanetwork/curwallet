@@ -7,6 +7,7 @@ from .models import Transaction
 from .conf import settings
 
 import os
+import json
 
 
 def _init_web3():
@@ -21,7 +22,10 @@ def _init_web3():
 def _init_token_contract():
     web3 = _init_web3()
 
-    return web3.eth.contract(address=settings.ICO_TOKEN_ADDRESS, abi=settings.ICO_TOKEN_ABI)
+    with open(os.path.join(settings.BASE_DIR, 'token.abi'), 'r') as abi_definition:
+        abi = json.load(abi_definition)
+
+    return web3.eth.contract(address=settings.ICO_TOKEN_ADDRESS, abi=abi)
 
 
 def create_account(password):
