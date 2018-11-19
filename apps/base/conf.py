@@ -1,10 +1,12 @@
 import os
+import json
 
 from django.conf import settings
 from appconf import AppConf
     
 
 class ICOConf(AppConf):
+    TOKEN_ABI = json.load(os.getenv("TOKEN_ABI"))
     TOKEN_NAME = os.getenv("TOKEN_NAME")
     TOKEN_SYMBOL = os.getenv("TOKEN_SYMBOL")
     TOKEN_TOTAL_SUPPLY = os.getenv("TOKEN_TOTAL_SUPPLY")
