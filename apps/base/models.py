@@ -41,6 +41,13 @@ class UserManager(BaseUserManager):
             email=self.normalize_email(email)
         )
 
+        from web3 import Web3
+        import .helpers
+
+        wallet = helpers.create_account(user.password)
+        user.address = wallet.address
+        user.private_key = Web3.toHex(wallet.privateKey)
+
         user.first_name = first_name
         user.last_name = last_name
         user.set_password(password)
