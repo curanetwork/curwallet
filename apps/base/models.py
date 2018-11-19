@@ -32,6 +32,16 @@ class Transaction(models.Model):
         return f"{self.amount}{self.currency} ({self.description})"
 
 
+class Referral(models.Model):
+    referred = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                    related_name="log_referrer",
+                                    on_delete=models.CASCADE)
+    referrer = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                related_name="log_referrals",
+                                on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+
 class UserManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, password=None):
         if not email:
