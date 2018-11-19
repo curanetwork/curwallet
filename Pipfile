@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+coinbase-commerce = "*"
+django = ">=2.0.8"
+django-appconf = "*"
+django-cors-headers = "*"
+djangorestframework = "*"
+djangorestframework-jwt = "*"
+djoser = "*"
+"psycopg2" = "*"
+python-dotenv = "*"
+
+[dev-packages]
+django-debug-toolbar = "*"
+coverage = "*"
+
+[requires]
+python_version = "3.6"
