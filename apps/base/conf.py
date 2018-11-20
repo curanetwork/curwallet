@@ -7,22 +7,22 @@ from appconf import AppConf
 class ICOConf(AppConf):
     TOKEN_NAME = os.getenv("TOKEN_NAME")
     TOKEN_SYMBOL = os.getenv("TOKEN_SYMBOL")
-    TOKEN_TOTAL_SUPPLY = os.getenv("TOKEN_TOTAL_SUPPLY")
-    TOKEN_DECIMALS = os.getenv("TOKEN_DECIMALS")
+    TOKEN_TOTAL_SUPPLY = int(os.getenv("TOKEN_TOTAL_SUPPLY"))
+    TOKEN_DECIMALS = float(os.getenv("TOKEN_DECIMALS"))
     STAGE = os.getenv("STAGE")
     START = os.getenv("START")
     END = os.getenv("END")
-    PRICE = os.getenv("PRICE") # in dollars
-    BONUS = os.getenv("BONUS") # in percentage
-    DAILY_CAP_PER_ACCOUNT = os.getenv("DAILY_CAP_PER_ACCOUNT")
-    MINIMUM_PURCHASE = os.getenv("MINIMUM_PURCHASE")
-    SOFTCAP = os.getenv("SOFTCAP") # in dollars
-    HARDCAP = os.getenv("HARDCAP") # in dollars
+    PRICE = float(os.getenv("PRICE")) # in dollars
+    BONUS = float(os.getenv("BONUS")) # in percentage
+    DAILY_CAP_PER_ACCOUNT = int(os.getenv("DAILY_CAP_PER_ACCOUNT")) # in tokens
+    MINIMUM_PURCHASE = float(os.getenv("MINIMUM_PURCHASE"))
+    SOFTCAP = float(os.getenv("SOFTCAP")) # in dollars
+    HARDCAP = float(os.getenv("HARDCAP")) # in dollars
     TOKEN_ADDRESS = os.getenv("TOKEN_ADDRESS")
-    TOKEN_OWNER_PRIVATE_KEY = os.getenv("TOKEN_ADDRESS")
+    TOKEN_OWNER_PRIVATE_KEY = os.getenv("TOKEN_OWNER_PRIVATE_KEY")
     CURRENCIES = (
-    	('BTC', 'Bitcoin'),
-    	('ETH', 'Ethereum'),
+        ('BTC', 'Bitcoin'),
+        ('ETH', 'Ethereum'),
         ('LTC', 'Litecoin'),
         ('BCH', 'Bitcoin Cash')
     )

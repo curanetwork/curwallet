@@ -4,6 +4,8 @@ DEBUG = True
 
 INTERNAL_IPS = ["127.0.0.1"]
 
+ALLOWED_HOSTS = ["localhost", ".ngrok.io"]
+
 SECRET_KEY = "secret"
 
 # DATABASE SETTINGS

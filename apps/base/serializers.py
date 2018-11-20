@@ -47,25 +47,36 @@ class ReferralSerializer(serializers.ModelSerializer):
         read_only_fields = ('email', 'referrals', 'date_joined')
 
 
-class UserSerializer(serializers.ModelSerializer):
-    referrals = ReferralSerializer(allow_null=True)
-    balance = serializers.SerializerMethodField()
-
-    @classmethod
-    def get_balance(self, obj):
-        """getter method to add field balance"""
-        return helpers.get_token_balance(obj.address)
+class DirectReferralSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'address', 'balance', 'is_admin', 'is_staff',
-            'date_joined', 'referrals')
-        depth = 1
+        fields = ('id', 'email', 'first_name', 'last_name', 'date_joined')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    balance = serializers.SerializerMethodField()
+    num_of_referrals = serializers.SerializerMethodField()
+
+    @classmethod
+    def get_balance(self, obj):
+        return helpers.get_token_balance(obj.address)
+
+    @classmethod
+    def get_num_of_referrals(self, obj):
+        return obj.referrals.count()
+
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'first_name', 'last_name', 'address', 
+            'mobile_no', 'balance', 'num_of_referrals', 'affiliate_id', 
+            'social_url', 'review', 'date_joined')
+        read_only_fields = ('email', 'address')
 
 
 class TransactionSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Transaction
-        fields = ('code', 'amount', 'currency', 'description',
+        fields = ('id', 'code', 'amount', 'currency', 'description',
             'status', 'modified', 'created')

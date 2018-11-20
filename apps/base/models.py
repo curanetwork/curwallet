@@ -4,6 +4,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser, PermissionsMixin)
 from django.core.mail import send_mail
+from django_extensions.db.fields import RandomCharField
 
 from .conf import settings as sett
 
@@ -80,6 +81,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    affiliate_id = RandomCharField(length=8, unique=True)
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -88,6 +90,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         related_name='referrals',
         on_delete=models.CASCADE
     )
+    social_url = models.URLField(max_length=1000)
+    review = models.TextField()
+    mobile_no = models.CharField(max_length=50)
     address = models.CharField(max_length=42)
     private_key = models.CharField(max_length=66)
     is_active = models.BooleanField(default=True)
@@ -96,7 +101,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     modified = models.DateTimeField(auto_now=True)
     date_joined = models.DateTimeField(auto_now_add=True)
 
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'address', 'date_joined']
     USERNAME_FIELD = 'email'
 
     objects = UserManager()

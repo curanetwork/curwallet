@@ -178,7 +178,7 @@ def details(request):
 
 class TransactionViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    API endpoint that allows transaction to be viewed.
+    API endpoint that allows transactions to be viewed.
     """
     serializer_class = TransactionSerializer
     http_method_names = ['get', 'head']
@@ -186,3 +186,15 @@ class TransactionViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return Transaction.objects.filter(user__id=self.request.user.id).order_by('-modified')
+
+
+class DirectReferralViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows referrals to be viewed.
+    """
+    serializer_class = DirectReferralSerializer
+    http_method_names = ['get', 'head']
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return self.request.user.referrals

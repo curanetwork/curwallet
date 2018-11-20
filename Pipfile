@@ -15,6 +15,7 @@ djoser = "*"
 "psycopg2" = "*"
 python-dotenv = "*"
 "web3" = {editable = true, ref = "c32816d74a74be76cbb9987b594ee59826937673", git = "https://github.com/ethereum/web3.py.git"}
+django-extensions = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
