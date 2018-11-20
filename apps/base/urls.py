@@ -9,6 +9,7 @@ from base import views
 router = routers.DefaultRouter()
 router.register(r'transactions', views.TransactionViewSet, 'transaction')
 router.register(r'referrals', views.DirectReferralViewSet, 'referral')
+router.register(r'faqs', views.FAQViewSet, 'faq')
 
 urlpatterns = [
   path('appi/', include(router.urls)),

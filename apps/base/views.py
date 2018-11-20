@@ -198,3 +198,12 @@ class DirectReferralViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return self.request.user.referrals
+
+
+class FAQViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows faqs to be viewed.
+    """
+    queryset = FAQ.objects.all()
+    serializer_class = FAQSerializer
+    http_method_names = ['get', 'head']

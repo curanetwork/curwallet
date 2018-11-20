@@ -51,7 +51,7 @@ class DirectReferralSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name', 'last_name', 'date_joined')
+        fields = ('id', 'email', 'first_name', 'last_name', 'dp', 'date_joined')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -70,7 +70,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'email', 'first_name', 'last_name', 'address', 
             'mobile_no', 'balance', 'num_of_referrals', 'affiliate_id', 
-            'social_url', 'review', 'date_joined')
+            'dp', 'social_url', 'review', 'date_joined')
         read_only_fields = ('email', 'address')
 
 
@@ -80,3 +80,10 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = ('id', 'code', 'amount', 'currency', 'description',
             'status', 'modified', 'created')
+
+
+class FAQSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = FAQ
+        fields = ('id', 'number', 'question', 'answer')

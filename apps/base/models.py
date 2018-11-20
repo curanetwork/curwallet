@@ -33,6 +33,17 @@ class Transaction(models.Model):
         return f"{self.amount}{self.currency} ({self.description})"
 
 
+class FAQ(models.Model):
+    number = models.PositiveIntegerField(unique=True)
+    question = models.CharField(max_length=200)
+    answer = models.TextField()
+    modified = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.number
+
+
 class Referral(models.Model):
     referred = models.OneToOneField(settings.AUTH_USER_MODEL,
                                     related_name="log_referrer",
@@ -83,6 +94,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     affiliate_id = RandomCharField(length=8, unique=True)
     email = models.EmailField(unique=True)
+    dp = models.URLField(max_length=1000, blank=True, null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     referred_by = models.ForeignKey(
@@ -90,9 +102,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         related_name='referrals',
         on_delete=models.CASCADE
     )
-    social_url = models.URLField(max_length=1000)
-    review = models.TextField()
-    mobile_no = models.CharField(max_length=50)
+    social_url = models.URLField(max_length=1000, blank=True, null=True)
+    review = models.TextField(blank=True, null=True)
+    mobile_no = models.CharField(max_length=24, blank=True, null=True)
     address = models.CharField(max_length=42)
     private_key = models.CharField(max_length=66)
     is_active = models.BooleanField(default=True)
