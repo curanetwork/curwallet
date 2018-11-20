@@ -6,10 +6,10 @@ from appconf import AppConf
 
 class ICOConf(AppConf):
     TOKEN_NAME = os.getenv("TOKEN_NAME")
-    TOKEN_SYMBOL = os.getenv("TOKEN_SYMBOL")
+    TOKEN_SYMBOL = os.getenv("TOKEN_SYMBOL").upper()
     TOKEN_TOTAL_SUPPLY = int(os.getenv("TOKEN_TOTAL_SUPPLY"))
     TOKEN_DECIMALS = float(os.getenv("TOKEN_DECIMALS"))
-    STAGE = os.getenv("STAGE")
+    STAGE = os.getenv("STAGE").upper()
     START = os.getenv("START")
     END = os.getenv("END")
     PRICE = float(os.getenv("PRICE")) # in dollars

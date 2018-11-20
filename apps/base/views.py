@@ -50,7 +50,7 @@ def ipn(request):
                 code=code,
                 amount=amount,
                 currency='USD',
-                description=f'Purchased {purchased} {settings.ICO_TOKEN_SYMBOL.upper()}',
+                description=f'[{settings.ICO_STAGE}] Purchased {purchased} {settings.ICO_TOKEN_SYMBOL.upper()}',
                 status=status
             )
         elif status == 'confirmed':
@@ -63,7 +63,7 @@ def ipn(request):
                 code=helpers.transfer_tokens(user, purchased),
                 amount=purchased,
                 currency=settings.ICO_TOKEN_SYMBOL.upper(),
-                description=f'Received {purchased} {settings.ICO_TOKEN_SYMBOL.upper()}',
+                description=f'[{settings.ICO_STAGE}] Received {purchased} {settings.ICO_TOKEN_SYMBOL.upper()}',
                 status=status
             )
 
@@ -117,47 +117,31 @@ def details(request):
     Return details of ICO
     """
 
-    def get_amount_raised(current=False):
-        raised = dict()
-        for currency in settings.ICO_CURRENCIES:
-            if current:
-                raised[currency[0]] = Transaction.objects.filter(
-                    currency=currency[0].upper(),
-                    status='paid',
-                    description=settings.ICO_STAGE.lower() + ' order'
-                ).aggregate(raised=Sum('amount'))['raised'] or 0.0
+    current_raised = Transaction.objects.filter(
+        currency='USD',
+        status='confirmed',
+        description__contains=settings.ICO_STAGE
+    ).aggregate(raised=Sum('amount'))['raised'] or 0.0
 
-                raised[currency[0]] *= helpers.get_rate(currency[0])
-                
-            else:
-                raised[currency[0]] = Transaction.objects.filter(
-                    currency=currency[0].upper(),
-                    status='paid',
-                    description__contains='order'
-                ).aggregate(raised=Sum('amount'))['raised'] or 0.0  
+    total_raised = Transaction.objects.filter(
+        currency='USD',
+        status='confirmed'
+    ).aggregate(raised=Sum('amount'))['raised'] or 0.0
 
-                raised[currency[0]] *= helpers.get_rate(currency[0])
-
-        total = float()
-
-        for i in raised:
-            total += raised[i]
-
-        return total
-
-    current_raised = get_amount_raised(current=True)
-    total_raised = get_amount_raised()
-    rates = {settings.ICO_TOKEN_SYMBOL: settings.ICO_PRICE}
+    currencies = list()
 
     for currency in settings.ICO_CURRENCIES:
-        rates[currency[0].upper()] = helpers.get_rate(currency[0])
+        currencies = currencies + [currency[0].upper()]
 
     if request.method == 'GET':
         serializer = ICODetailSerializer(data={
+            'token_name': settings.ICO_TOKEN_NAME,
+            'token_symbol': settings.ICO_TOKEN_SYMBOL,
             'stage': settings.ICO_STAGE,
             'start': settings.ICO_START,
             'end': settings.ICO_END,
-            'rates': rates,
+            'price': settings.ICO_PRICE,
+            'currencies': currencies,
             'bonus': settings.ICO_BONUS,
             'current_raised': current_raised,
             'total_raised': total_raised,

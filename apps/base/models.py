@@ -41,7 +41,7 @@ class FAQ(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.number
+        return f'{self.number}'
 
 
 class Referral(models.Model):

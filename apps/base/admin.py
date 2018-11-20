@@ -21,8 +21,15 @@ class TransactionAdmin(admin.ModelAdmin):
     search_fields = ('user__email',)
 
 
+class FAQAdmin(admin.ModelAdmin):
+    list_display = ('number', 'question', 'answer', 'modified', 'created')
+    list_filter = ('number', 'created', 'modified')
+    search_fields = ('question', 'answer',)
+
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Transaction, TransactionAdmin)
+admin.site.register(FAQ, FAQAdmin)
 
 #admin.site.login = login_required(admin.site.login)
 #admin.autodiscover()

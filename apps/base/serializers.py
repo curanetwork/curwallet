@@ -23,10 +23,15 @@ class InvestSerializer(serializers.Serializer):
 
 
 class ICODetailSerializer(serializers.Serializer):
+    token_name = serializers.CharField()
+    token_symbol = serializers.CharField()
     stage = serializers.CharField()
     start = serializers.DateField()
     end = serializers.DateField()
-    rates = serializers.DictField()
+    price = serializers.FloatField()
+    currencies = serializers.ListField(
+        child=serializers.CharField()
+    )
     bonus = serializers.FloatField()
     current_raised = serializers.FloatField()
     total_raised = serializers.FloatField()

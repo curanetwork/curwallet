@@ -32,8 +32,8 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 CLIENT_AUTH_BASE = "http://localhost:3000"
 
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': CLIENT_AUTH_BASE + '/password/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': CLIENT_AUTH_BASE + '/activate/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': CLIENT_AUTH_BASE + '/reset-password?uid={uid}&token={token}',
+    'ACTIVATION_URL': CLIENT_AUTH_BASE + '/activate?uid={uid}&token={token}',
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
         'user': 'base.serializers.UserSerializer'

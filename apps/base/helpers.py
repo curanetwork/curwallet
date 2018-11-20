@@ -63,16 +63,6 @@ def calculate_bought(amount):
     return bought
 
 
-def get_rate(currency):
-    import requests
-
-    dollar_rate = float(requests.get(
-        f'https://api.coinbase.com/v2/prices/{currency.upper()}-USD/spot'
-    ).json()['data']['amount'])
-
-    return dollar_rate
-
-
 def transfer_tokens(user, amount):
     amount = float(amount)
 
